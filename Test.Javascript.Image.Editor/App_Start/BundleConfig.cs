@@ -22,7 +22,8 @@ namespace Test.Javascript.Image.Editor
 
             bundles.Add(new ScriptBundle(
                 "~/bundles/fabricjs",
-                "http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"));
+                "http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js")
+                .Include("~/Scripts/fabric.js"));
 
             bundles.Add(new ScriptBundle(
                 "~/bundles/pixijs")

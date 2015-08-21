@@ -3,7 +3,7 @@
     <p class="lead">
         Test site for javascript image editors to use with custom T-Shirt creation.
     </p>
-    <<ul>
+    <ul>
          <li><a href="http://fabricjs.com/demos/" class="btn btn-primary btn-lg">Fabric.js</a></li>
          <li><a href="http://pixijs.github.io/examples/" class="btn btn-primary btn-lg">Pixi.JS</a></li>
     </ul>
@@ -11,7 +11,10 @@
 <div class="row">
     <div class="col-md-6">
         <h3>Fabric.js Base</h3>
-        <canvas id="fabric"></canvas>
+        <div id="fabric-canvas-wrap">
+            <canvas id="fabric-canvas"></canvas>
+        </div>
+        <div><label for="imgLoader">Upload file to canvas</label><input type="file" id="imgLoader" /></div>
     </div>
     <div class="col-md-6">
         <h3>Pixi.js Base</h3>
@@ -23,18 +26,62 @@
     </div>
     <div class="col-md-6">
         <h3>Others</h3>
-        kinetic.js, Collie, CamanJS, DarkRoomJS, Jrac, svgjs, glfx.js, webgl-filter,
+        kinetic.js, Collie, CamanJS, DarkRoomJS, Jrac, svgjs, glfx.js, webgl-filter, paper.js, Caat CSS
     </div>
     <div class="col-md-12">
         <h3>Stuff to look at, once I have time?</h3>
         <a href="http://www.karmaloop.com/?gclid=CMD_h_2FtscCFY6EaQod5agJMA">Karma Loop</a>
     </div>
 </div>
-
+<style>
+    canvas {
+        width: 161px;
+        height: 121px;
+    }
+</style>
 @section scripts {
     <script>
-        fabric.Canvas('fabric', {
-
+var canvas;
+$(function () {
+    fabric.Image.fromURL('/Content/Images/Shirt.png', function (bgImage) {
+        canvas = new fabric.Canvas('fabric-canvas', {
+            backgroundImage: bgImage
         });
+        canvas.setHeight(121);
+        canvas.setWidth(161);
+        var cw = $('#fabric-canvas-wrap');
+        cw[0].tabIndex = 1000;
+        $('#fabric-canvas-wrap').keydown(function (event) {
+            var preventEvent = true;
+            switch (event.keyCode) {
+                case 46:
+                    canvas.getActiveObject().remove();
+                    break;
+                case 17:
+                    canvas.isDrawingMode = !(canvas.isDrawingMode || false);
+                    break;
+                default:
+                    preventEvent = false;
+                    break;
+            }
+            if (preventEvent) {
+                event.preventDefault();
+            }
+        });
+    });
+    $('#imgLoader').change(function (ev) {
+        var fr = new FileReader();
+        fr.onload = function (event) {
+            fabric.Image.fromURL(event.target.result, function (usrImage) {
+                usrImage.set({
+                    left: 55,
+                    top: 22
+                });
+                canvas.add(usrImage);
+            });
+        };
+        fr.readAsDataURL(ev.target.files[0]);
+    });
+});
     </script>
 }
