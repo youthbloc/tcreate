@@ -1,24 +1,40 @@
 ﻿<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>YouthBloc T-Shirts!</h1>
+    <p class="lead">
+        Test site for javascript image editors to use with custom T-Shirt creation.
+    </p>
+    <<ul>
+         <li><a href="http://fabricjs.com/demos/" class="btn btn-primary btn-lg">Fabric.js</a></li>
+         <li><a href="http://pixijs.github.io/examples/" class="btn btn-primary btn-lg">Pixi.JS</a></li>
+    </ul>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <h3>Fabric.js Base</h3>
+        <canvas id="fabric"></canvas>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <h3>Pixi.js Base</h3>
+        <canvas id="pixi"></canvas>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <h3>EaselJS</h3>
+        <a href="http://code.tutsplus.com/tutorials/build-an-image-editor-with-easeljs-jquery-and-the-html5-file-api--active-11142">Easel Editor Tutorial</a>
+    </div>
+    <div class="col-md-6">
+        <h3>Others</h3>
+        kinetic.js, Collie, CamanJS, DarkRoomJS, Jrac, svgjs, glfx.js, webgl-filter,
+    </div>
+    <div class="col-md-12">
+        <h3>Stuff to look at, once I have time?</h3>
+        <a href="http://www.karmaloop.com/?gclid=CMD_h_2FtscCFY6EaQod5agJMA">Karma Loop</a>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        fabric.Canvas('fabric', {
+
+        });
+    </script>
+}
