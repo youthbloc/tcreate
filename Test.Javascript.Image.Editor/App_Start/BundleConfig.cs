@@ -21,22 +21,22 @@ namespace Test.Javascript.Image.Editor
             bundles.UseCdn = true;
 
             var jQueryAndPlugins = new ScriptBundle("~/bundles/jquery")
-                .Include("~/Scripts/jquery-{version}.js")
-                .Include("~/Scripts/jquery.fontselect.js");
-
+                .Include("~/Scripts/jquery/jquery-{version}.js")
+                .Include("~/Scripts/jquery/jquery.fontselect.js");
             jQueryAndPlugins.Orderer = new NonOrderingBundleOrderer();
-
             bundles.Add(jQueryAndPlugins);
 
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle(
-                "~/bundles/modernizr")
-                .Include("~/Scripts/modernizr-*"));
+                "~/bundles/underscore")
+                .Include("~/Scripts/underscore/underscore.js"));
 
-            bundles.Add(new ScriptBundle(
-                "~/bundles/bootstrap")
-                .Include("~/Scripts/bootstrap.js",
-                "~/Scripts/respond.js"));
+            var knockoutAndPlugins = new ScriptBundle("~/bundles/knockout")
+                .Include("~/Scripts/knockout/knockout-{version}.js")
+                .Include("~/Scripts/knockout/knockout.extenders.numeric.js")
+                .Include("~/Scripts/knockout/knockout.mapping-latest.debug.js")
+                .Include("~/Scripts/knockout/knockout.momento.js");
+            knockoutAndPlugins.Orderer = new NonOrderingBundleOrderer();
+            bundles.Add(knockoutAndPlugins);
 
             bundles.Add(new ScriptBundle(
                 "~/bundles/webfontloader",
@@ -44,23 +44,38 @@ namespace Test.Javascript.Image.Editor
                 .Include("~/Scripts/webfont.js"));
 
             bundles.Add(new ScriptBundle(
-                "~/bundles/underscore")
-                .Include("~/Scripts/underscore.js"));
+                "~/bundles/jscolor")
+                .Include("~/Scripts/jscolor.js"));
 
             bundles.Add(new ScriptBundle(
                 "~/bundles/fabricjs",
                 "http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js")
-                .Include("~/Scripts/fabric.js"));
+                .Include("~/Scripts/fabric/fabric.js"));
 
             bundles.Add(new ScriptBundle(
                 "~/bundles/pixijs")
                 .Include(
-                    "~/Scripts/pixi.js"));
+                    "~/Scripts/pixi/pixi.js"));
 
             //bundles.Add(new ScriptBundle(
-            //    "~/bundles/")
+            //    "~/bundles/dropzone")
+            //    .Include("~/Scripts/dropzone/dropzone.js"));
+
+            //bundles.Add(new StyleBundle(
+            //    "~/Content/dropzonescss")
             //    .Include(
-            //        "~/Scripts/"));
+            //        "~/Scripts/dropzone/css/basic.css",
+            //        "~/Scripts/dropzone/css/dropzone.css"));
+
+            bundles.Add(new ScriptBundle(
+                "~/bundles/bootstrap")
+                .Include("~/Scripts/bootstrap/bootstrap.js"));
+
+            bundles.Add(new ScriptBundle(
+                "~/bundles/pollyfill")
+                .Include(
+                    "~/Scripts/polyfill/modernizr-*",
+                    "~/Scripts/polyfill/respond.js"));
 
             bundles.Add(new StyleBundle(
                 "~/Content/css")

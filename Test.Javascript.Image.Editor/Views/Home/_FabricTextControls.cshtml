@@ -1,0 +1,31 @@
+﻿<div>
+    <textarea name="text" type="text" placeholder="Text to be inputed" rows="5"></textarea>
+    @*<input name="fontSize" type="range" min="6" max="250" placeholder="Font-Size" />*@
+
+    <input name="fontFamily" class="fontSelector" type="text" data-bind="textInput: fontFamily" />
+    <input name="fontSize" type="number" data-min="6" data-max="250" data-bind="textInput: fontSize"/>
+    <div class="btn-group font-weight">
+        <button type="button" class="btn btn-sm btn-default" aria-label="Bold" data-bind="css: {active: isBold}, click: bold"><span class="glyphicon glyphicon-bold" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-sm btn-default" aria-label="Italic" data-bind="css: {active: isItalic}, click: italic"><span class="glyphicon glyphicon-italic" aria-hidden="true"></span></button>
+    </div>
+    <div class="btn-group font-decoration">
+        <button type="button" class="btn btn-sm btn-default" aria-label="Underline" data-bind="css: {active: isUnderlined}, click: underline"><span class="glyphicon glyphicon-font" style="text-decoration: underline;" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-sm btn-default" aria-label="Line-Through" data-bind="css: {active: isLineThrough}, click: lineThrough"><span class="glyphicon glyphicon-font" style="text-decoration: line-through;" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-sm btn-default" aria-label="Overline" data-bind="css: {active: isOverlined}, click: overline"><span class="glyphicon glyphicon-font" style="text-decoration: overline;" aria-hidden="true"></span></button>
+    </div>
+    <input name="fill" class="color" data-bind="value: fill" />
+    <div class="btn-group font-alignment">
+        <button type="button" class="btn btn-sm btn-default" aria-label="Left Align" data-bind="css: {active: isLeftAligned}, click: leftAlign"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-sm btn-default" aria-label="Center Align" data-bind="css: {active: isCenterAligned}, click: centerAlign"><span class="glyphicon glyphicon-align-center" aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-sm btn-default" aria-label="Right Align" data-bind="css: {active: isRightAligned}, click: rightAlign"><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span></button>
+    </div>
+    @*<select name="textAlign" data-bind="value: textAlign, options: textAlignOptions, optionsText: toTitleCase"></select>*@
+    @*<input name="lineHeight" data-bind"value: lineHeight"/>*@
+    @*
+        Shadow: { color, offsetX, offsetY, blur }
+        lineHeight:
+        textBackgroundColor:
+        stroke:
+        strokeWidth:
+    *@
+</div>

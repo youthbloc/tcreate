@@ -11,54 +11,13 @@
 <div class="row">
     <div class="col-md-6">
         <h3>Fabric.js Base</h3>
-        <div id="fabric-canvas-wrap">
+        <div id="fabric-canvas-wrap" tabindex="1000">
             <canvas id="fabric-canvas"></canvas>
         </div>
         <div id="fabric-controls">
+            <div id="fabric-edit-element-control"></div>
             <div><label for="imgLoader">Upload file to canvas</label><input type="file" id="imgLoader" /></div>
-            <form method="get" action="" id="fabric-add-text">
-                <textarea name="text" type="text" placeholder="Text to be inputed" rows="5"></textarea>
-                <input name="fill" class="color" />
-                @*<input name="fontSize" type="range" min="6" max="250" placeholder="Font-Size" />*@
-                <input name="fontSize" type="number" data-min="6" data-max="250" placeholder="Font-Size" />
-                <select name="fontWeight">
-                    <option value="normal" selected="selected">Normal</option>
-                    <option value="bold">Bold</option>
-                </select>
-                <select name="fontStyle">
-                    <option value="normal" selected="selected">Normal</option>
-                    <option value="italic">Italic</option>
-                </select>
-                <select name="textDecoration">
-                    <option value="" selected="selected">Normal</option>
-                    <option value="underline">Underline</option>
-                    <option value="line-through">Line-through</option>
-                    <option value="overline">Overline</option>
-                </select>
-                <input name="fontFamily" class="fontSelector" type="text" />
-                @*<div class="dropdown">
-                    <input type="hidden" name="fontFamily" class="fontPicker" />
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                        Select Font
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" id="fabric-font-selector">
-                    </ul>
-                </div>*@
-                <select name="textAlign">
-                    <option value="left">Left</option>
-                    <option value="center">Center</option>
-                    <option value="right">Right</option>
-                </select>
-@*
-Shadow: { color, offsetX, offsetY, blur }
-lineHeight:
-textBackgroundColor:
-stroke:
-strokeWidth:
-*@
-                <button type="submit">Add Text</button>
-            </form>
+            <div><button type="button" class="btn btn-default" data-bind="click: addNewFont">Add Font</button></div>
         </div>
     </div>
     <div class="col-md-6">
@@ -82,104 +41,14 @@ strokeWidth:
     <script>
 var canvas;
 $(function () {
-    var fonts = "Tangerine|Cantarell|Droid+Sans|Allan|Allerta|Allerta+Stencil|Anonymous+Pro|Arimo|Arvo|Bentham|Buda|Cabin|Calligraffitti|Cantarell|Cardo|Cherry+Cream+Soda|Chewy|Coda|Coming+Soon|Copse|Corben|Cousine|Covered+By+Your+Grace|Crafty+Girls|Crimson+Text|Crushed|Cuprum|Droid+Sans|Droid+Sans+Mono|Droid+Serif|Fontdiner+Swanky|GFS+Didot|GFS+Neohellenic|Geo|Gruppo|Hanuman|Homemade+Apple|IM+Fell+DW+Pica|IM+Fell+DW+Pica+SC|IM+Fell+Double+Pica|IM+Fell+Double+Pica+SC|IM+Fell+English|IM+Fell+English+SC|IM+Fell+French+Canon|IM+Fell+French+Canon+SC|IM+Fell+Great+Primer|IM+Fell+Great+Primer+SC|Inconsolata|Irish+Growler|Josefin+Sans|Josefin+Slab|Just+Another+Hand|Just+Me+Again+Down+Here|Kenia|Kranky|Kristi|Lato|Lekton|Lobster|Luckiest+Guy|Merriweather|Molengo|Mountains+of+Christmas|Neucha|Neuton|Nobile|OFL+Sorts+Mill+Goudy+TT|Old+Standard+TT|Orbitron|PT+Sans|PT+Sans+Caption|PT+Sans+Narrow|Permanent+Marker|Philosopher|Puritan|Raleway|Reenie+Beanie|Rock+Salt|Schoolbell|Slackey|Sniglet|Sunshiney|Syncopate|Tangerine|Tinos|Ubuntu|UnifrakturCook|UnifrakturMaguntia|Unkempt|Vibur|Vollkorn|Walter+Turncoat|Yanone+Kaffeesatz";
-    var fontNames = fonts.replace('+', " ").split('|');
-    var $fs = $('.fontSelector').fontselect({ fonts: fontNames, lookahead:20 });
 
-    fabric.Image.fromURL('/Content/Images/Shirt.png', function (bgImage) {
-        var bgScale = 3;
-        var bgHeight = bgImage.getHeight();
-        var bgWidth = bgImage.getWidth();
-        //canvas.setHeight(bgHeight);
-        //canvas.setWidth(bgWidth);
 
-        canvas = new fabric.Canvas('fabric-canvas', {
-            height: bgHeight * bgScale,
-            width: bgWidth * bgScale
-        });
-        var scaleX = canvas.getWidth() / bgWidth;
-        var scaleY = canvas.getHeight() / bgHeight;
-        var scale = Math.min(scaleX, scaleY);
-        bgImage.scale(scale);
-        canvas.setBackgroundImage(bgImage);
-        canvas.renderAll();
+    /* User Controls*/ (function () {
 
-        /* User Controls*/ (function () {
-            var commonFunctions = {
-                copy: function () {
-                    var retval = [];
-                    if (canvas.getActiveGroup()) {
-                        retval = _.toArray(canvas.getActiveGroup().objects);
-                    }
-                    else if (canvas.getActiveObject()) {
-                        retval.push(canvas.getActiveObject());
-                    }
-                    return retval;
-                },
-                paste: function (copied) {
-                    _.each(copied, function (item) {
-                        canvas.add(fabric.util.object.clone(item));
-                    });
-                },
-                changeDrawMode: function () {
-                    canvas.isDrawingMode = !(canvas.isDrawingMode || false);
-                },
-                deleteActive: function () {
-                    if (canvas.getActiveGroup()) {
-                        _.each(canvas.getActiveGroup().objects, function (item) {
-                            canvas.remove(item)
-                        });
-                    }
-                    else if (canvas.getActiveObject()) {
-                        canvas.getActiveObject().remove();
-                    }
-                }
-            }
-            var cw = $('#fabric-canvas-wrap');
-            cw[0].tabIndex = 1000;
-            canvas.on({
-                'touch:shake': function () {
-                    commonFunctions.deleteActive();
-                },
-                'touch:longpress': function () {
-                    commonFunctions.changeDrawMode();
-                }
-            });
-            $('#fabric-canvas-wrap').keydown(function (event) {
-                var preventEvent = true;
-                switch (event.keyCode) {
-                    case 46:
-                        commonFunctions.deleteActive();
-                        break;
-                    case 17:
-                        commonFunctions.changeDrawMode();
-                        break;
-                    default:
-                        preventEvent = false;
-                        break;
-                }
-                if (preventEvent) {
-                    event.preventDefault();
-                }
-            });
         })();
 
         /*Handle User Load Image*/ (function () {
-            $('#imgLoader').change(function (ev) {
-                var fr = new FileReader();
-                fr.onload = function (event) {
-                    fabric.Image.fromURL(event.target.result, function (usrImage) {
-                        var h = usrImage.getHeight()
-                        var w = usrImage.getWidth();
-                        if (w > (h / bgHeight * bgWidth))
-                        { usrImage.setWidth(bgWidth); }
-                        else
-                        { usrImage.setHeight(bgHeight); }
-                        canvas.add(usrImage);
-                    });
-                };
-                fr.readAsDataURL(ev.target.files[0]);
-            });
+            
         })();
 
         /*Handle Adding Text*/ (function () {
